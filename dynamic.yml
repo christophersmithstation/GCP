@@ -1,0 +1,30 @@
+http:
+  routers:
+    flask-app:
+      rule: "Host(`flask-app.your-domain.com`)"
+      entryPoints:
+        - web
+        - websecure
+      service: flask-app
+      tls:
+        certResolver: letsencrypt
+
+    prometheus:
+      rule: "Host(`prometheus.your-domain.com`)"
+      entryPoints:
+        - web
+        - websecure
+      service: prometheus
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    flask-app:
+      loadBalancer:
+        servers:
+          - url: "http://your-home-ip:your-flask-app-port"
+
+    prometheus:
+      loadBalancer:
+        servers:
+          - url: "http://your-home-ip:your-prometheus-port"
