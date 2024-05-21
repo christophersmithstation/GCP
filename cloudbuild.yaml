@@ -6,3 +6,6 @@ steps:
 
 images:
   - 'gcr.io/peak-vista-424017-v9/traefik-reverse-proxy'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
