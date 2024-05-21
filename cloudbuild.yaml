@@ -1,11 +1,11 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/peak-vista-424017-v9/traefik-reverse-proxy', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/traefik-reverse-proxy', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/peak-vista-424017-v9/traefik-reverse-proxy']
+    args: ['push', 'gcr.io/$PROJECT_ID/traefik-reverse-proxy']
 
 images:
-  - 'gcr.io/peak-vista-424017-v9/traefik-reverse-proxy'
+  - 'gcr.io/$PROJECT_ID/traefik-reverse-proxy'
 
 options:
   logging: CLOUD_LOGGING_ONLY
