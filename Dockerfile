@@ -9,5 +9,3 @@ RUN chmod 600 /etc/traefik/acme.json
 
 EXPOSE 80
 EXPOSE 443
-
-# Test after getting gcp up and running
