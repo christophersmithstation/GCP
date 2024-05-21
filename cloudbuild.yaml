@@ -1,11 +1,21 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/traefik-reverse-proxy', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/your-project-id/repository-name/traefik-reverse-proxy:$COMMIT_SHA', '.']
+
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/traefik-reverse-proxy']
+    args: ['push', 'us-central1-docker.pkg.dev/your-project-id/repository-name/traefik-reverse-proxy:$COMMIT_SHA']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud run deploy traefik-proxy \
+          --image us-central1-docker.pkg.dev/your-project-id/repository-name/traefik-reverse-proxy:$COMMIT_SHA \
+          --platform managed \
+          --region us-central1 \
+          --allow-unauthenticated \
+          --port 80
 
 images:
-  - 'gcr.io/$PROJECT_ID/traefik-reverse-proxy'
-
-options:
-  logging: CLOUD_LOGGING_ONLY
+  - 'us-central1-docker.pkg.dev/your-project-id/repository-name/traefik-reverse-proxy:$COMMIT_SHA'

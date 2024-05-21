@@ -3,22 +3,19 @@ entryPoints:
     address: ":80"
   websecure:
     address: ":443"
+  traefik:
+    address: ":8080"
 
 providers:
   file:
-    filename: /etc/traefik/dynamic.yml
-
-certificatesResolvers:
-  letsencrypt:
-    acme:
-      email: your-email@example.com
-      storage: /etc/traefik/acme.json
-      httpChallenge:
-        entryPoint: web
+    filename: "/etc/traefik/dynamic.yml"
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
 
 api:
   dashboard: true
-  insecure: true
 
 log:
   level: DEBUG
+
+accessLog: {}

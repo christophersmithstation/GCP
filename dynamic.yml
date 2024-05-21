@@ -1,30 +1,28 @@
 http:
   routers:
-    flask-app:
-      rule: "Host(`flask-app.your-domain.com`)"
+    web:
       entryPoints:
-        - web
-        - websecure
-      service: flask-app
-      tls:
-        certResolver: letsencrypt
+        - "web"
+      rule: "Host(`yourdomain.com`)"
+      service: "your-service"
 
-    prometheus:
-      rule: "Host(`prometheus.your-domain.com`)"
+    websecure:
       entryPoints:
-        - web
-        - websecure
-      service: prometheus
-      tls:
-        certResolver: letsencrypt
+        - "websecure"
+      rule: "Host(`yourdomain.com`)"
+      service: "your-service"
+      tls: {}
 
-  services:
-    flask-app:
-      loadBalancer:
-        servers:
-          - url: "http://your-home-ip:your-flask-app-port"
+    dashboard:
+      entryPoints:
+        - "traefik"
+      rule: "Host(`dashboard.yourdomain.com`)"
+      service: "api@internal"
+      middlewares:
+        - "auth"
 
-    prometheus:
-      loadBalancer:
-        servers:
-          - url: "http://your-home-ip:your-prometheus-port"
+middlewares:
+  auth:
+    basicAuth:
+      users:
+        - "admin:hashed_password"  # Replace with your hashed password
