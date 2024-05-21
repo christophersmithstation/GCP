@@ -1,9 +1,11 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us-central1-docker.pkg.dev/your-project-id/repository-name/traefik-reverse-proxy:$COMMIT_SHA', '.']
+    id: Build
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/your-project-id/repository-name/traefik-reverse-proxy:$COMMIT_SHA']
+    id: Push
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
@@ -16,6 +18,10 @@ steps:
           --region us-central1 \
           --allow-unauthenticated \
           --port 80
+    id: Deploy
+
+options:
+  logging: CLOUD_LOGGING_ONLY  # Set the logging option to CLOUD_LOGGING_ONLY
 
 images:
   - 'us-central1-docker.pkg.dev/your-project-id/repository-name/traefik-reverse-proxy:$COMMIT_SHA'
