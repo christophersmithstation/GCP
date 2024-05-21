@@ -9,3 +9,4 @@ RUN chmod 600 /etc/traefik/acme.json
 
 EXPOSE 80
 EXPOSE 443
+# This is a test
