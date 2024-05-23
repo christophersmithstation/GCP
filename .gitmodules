@@ -1,0 +1,3 @@
+[submodule "mernRBAC/mernboilerplate-antd"]
+	path = mernRBAC/mernboilerplate-antd
+	url = https://github.com/foyzulkarim/mernboilerplate-antd.git
